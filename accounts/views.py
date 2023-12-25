@@ -2,10 +2,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 
 from accounts.forms import UserRegistrationForm, UserLoginForm
+from home.models import Post
 
 
 class RegisterView(View):
@@ -63,3 +64,12 @@ class LogoutView(LoginRequiredMixin, View):
         logout(request)
         messages.success(request, 'you logged out successfully', 'success')
         return redirect('home:home')
+
+
+class UserProfileView(LoginRequiredMixin, View):
+    def get(self, request, user_id):
+        user = get_object_or_404(User, pk=user_id)
+        posts = Post.objects.filter(user=user)                      # پست های هر کاربر مربوط به خودشو میاره
+        return render(request, 'accounts/profile.html', {'user': user, 'posts': posts})
+
+
