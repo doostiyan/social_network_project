@@ -11,7 +11,7 @@ from home.models import Post
 
 class HomeView(View):
     def get(self, request):
-        posts = Post.objects.all()
+        posts = Post.objects.order_by('-created_at')
         return render(request, 'home/index.html', {'posts': posts})
 
 
