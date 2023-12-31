@@ -1,8 +1,9 @@
 from django.contrib import admin
 
-from home.models import Post
+from home.models import Post, Comment, Vote
 
 
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('user', 'slug', 'updated_at')
     search_fields = ('slug', 'body')
@@ -11,4 +12,10 @@ class PostAdmin(admin.ModelAdmin):
     raw_id_fields = ('user',)
 
 
-admin.site.register(Post, PostAdmin)
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'post', 'created_at', 'is_reply')
+    raw_id_fields = ('user', 'post', 'reply', )
+
+
+admin.site.register(Vote)
