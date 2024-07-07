@@ -20,10 +20,10 @@ class Post(models.Model):
         return reverse('home:post_detail', args=[self.id, self.slug])
 
     def likes_count(self):
-        return self.pvotes.count()
+        return self.pvotes.count() # با استفاده از سلف همین پست با ریلیتد نیم لایک میشماره
 
-    def user_can_like(self, user):
-        user_likes = user.uvotes.filter(post=self)
+    def user_can_like(self, user): # داخل مدل به ریکویست دسترسی نداریم
+        user_likes = user.uvotes.filter(post=self)   # لایک هایی رو برام بیار که مر بوط به همین پست
         if user_likes.exists():
             return True
         return False

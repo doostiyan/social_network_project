@@ -39,6 +39,10 @@ class LoginView(View):
     form_class = UserLoginForm
     template_name = 'accounts/login.html'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.next = None
+
     def setup(self, request, *args, **kwargs):
         self.next = request.GET.get('next')
         return super().setup(request, *args, **kwargs)

@@ -111,7 +111,7 @@ class PostCreateView(LoginRequiredMixin, View):
         if form.is_valid():
             new_post = form.save(commit=False)
             new_post.slug = slugify(form.cleaned_data['body'][:30])
-            new_post.user = request.user
+            new_post.user = request.user  # چون رابطه ای است باید یه ابزکت کامل ازش ارسال کنیم
             new_post.save()
             messages.success(request, 'you create a new post', 'success')
             return redirect('home:post_detail', new_post.id, new_post.slug)
@@ -128,7 +128,7 @@ class PostReplyView(LoginRequiredMixin, View):
             reply = form.save(commit=False)
             reply.user = request.user
             reply.post = post
-            reply.reply = comment
+            reply.reply = comment # reply فیلد مربوط به مدل 
             reply.is_reply = True
             reply.save()
             messages.success(request, 'your reply submitted successfully', 'success')

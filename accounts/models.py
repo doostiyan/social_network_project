@@ -3,8 +3,8 @@ from django.db import models
 
 
 class Relation(models.Model):
-    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
-    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following') # چه کسی فالو میشه
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')   # چه کسی فالو میکنه
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
